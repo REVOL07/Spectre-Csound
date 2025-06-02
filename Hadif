@@ -1,0 +1,199 @@
+<CsoundSynthesizer>
+<CsOptions>
+-odac
+</CsOptions>
+<CsInstruments>
+
+sr = 44100
+ksmps = 64
+nchnls = 2
+;0dbfs = 1
+
+;Treble Clef (G Clef) plays higher notes (C4 and up).
+;Bass Clef (F Clef) plays lower notes (around C3 and below)
+
+//simple gen10 pinao likes
+instr 1
+    amp 	line		10000, p3, 0       ; Amplitude envelope (fade in)
+    afreq = cpspch(p4)             ; Convert pch to Hz
+    asig oscil amp, afreq, 1       ; Use function table 1 
+    outs asig, asig
+endin
+
+;lessen the bass clef so x overpower the treble clef
+//Bass Clef
+instr 2
+    amp 	line		5000, p3, 0       ; Amplitude envelope (fade in)
+    afreq = cpspch(p4)             ; Convert pch to Hz
+    asig oscil amp, afreq, 1       ; Use function table 1 
+    outs asig, asig
+endin
+
+instr 99
+    
+endin
+
+</CsInstruments>
+<CsScore>
+
+f1 0 4096 10 1                      ; sine
+f2 0 4096 10 1 0.5 0.33 0.25 0.2    ; sawtooth (partial)
+f3 0 4096 10 1 0 0.33 0 0.2 0 0.14  ; square (partial)
+
+
+;treble clef
+;g c# e, a c# a, b g^# e, b f# d#
+;1rest, 1/2rest, g, g, b, c#-c# 1/2, c#, b, g-g1/2, f-f
+
+t 0 128  ; Start time 0, tempo = 120 BPM
+
+
+;8-treble clef 
+;F# F# G# D#
+i1 0 1 9.06
+i1 + 0.5 9.06
+i1 + 0.5 9.08
+i1 + 2 9.03
+
+;8-bass clef
+;B,Fs,B,Fs
+i2 0 0.5 6.11
+i2 0.5 0.5 7.06
+i2 1 0.5 7.11
+i2 1.5 0.5 7.06
+
+;B,Fs,B,Fs
+i2 2 0.5 6.11
+i2 2.5 0.5 7.06
+i2 3 0.5 7.11
+i2 3.5 0.5 7.06
+
+;9-treble clef 
+;Fs,Fs,Gs,Ds,Ds,E
+i1 0 1 9.06;f next sharp
+i1 + 0.5 9.06;''
+i1 + 0.5 9.08;G n s
+i1 + 1 9.03;D s
+i1 + 0.5 9.03;''
+i1 + 0.5 9.04;E n 
+
+;-base clef
+i2 0 2 6.11;b 
+i2 + 1 6.11;b
+i2 + 1 6.11;b
+
+;10-treble clef 
+;E,E,E,E E,E,E,E
+i1 0 1 10.04
+i1 + 1 10.04
+i1 + 1 10.04
+i1 + 1 10.04
+
+i1 + 0.5 10.04
+i1 + 0.5 10.04
+i1 + 0.5 10.04
+i1 + 0.5 10.04
+;rest 4 sec ( frm time 6-10)
+
+;10-bass clef
+;Cs,Cs,Cs,Cs
+i2 0 1 7.01
+i2 + 1 7.01
+i2 + 1 7.01
+i2 + 1 7.01
+;Cs,Cs,Cs,CS
+i2 + 0.5 7.01
+i2 + 0.5 7.01
+i2 + 0.5 7.01
+i2 + 0.5 7.01
+
+;rest 2 sec 
+;Cs
+i2 8 0.5 7.01
+
+;rest 1/2 sec
+;Cs
+i2 9 0.5 7.01
+
+;rest 1/2 sec (start balik 10)
+
+;11
+;Fs,Fs,Gs,Ds,E,D,B
+i1 0 1 9.06
+i1 + 0.5 9.06
+i1 + 0.5 9.08
+i1 + 0.5 9.03
+i1 + 0.5 9.04
+i1 + 0.5 10.02
+i1 + 0.5 9.11
+
+;11
+;B,Fs,B,Fs B,Fs,B,Fs
+i2 0 0.5 6.11 
+i2 + 0.5 7.06
+i2 + 0.5 7.11
+i2 + 0.5 7.06
+
+i2 + 0.5 6.11 
+i2 + 0.5 7.06
+i2 + 0.5 7.11
+i2 + 0.5 7.06
+
+;12
+;E,E,F,C
+i1 0 1 10.04
+i1 + 0.5 10.04 
+i1 + 0.5 10.05
+i1 + 2 9.10.00
+;B,B,F,E,E,A,G,E
+i1 + 1 9.11
+i1 + 0.5 9.11 
+i1 + 0.5 10.05
+i1 + 1 10.04
+i1 + 0.25 10.04
+i1 + 0.25 10.09
+i1 + 0.25 10.07
+i1 + 0.25 10.04
+
+;D,D,F,D
+i1 + 1 10.02
+i1 + 0.5 10.02 
+i1 + 0.5 10.05
+i1 + 2 10.02
+
+;A,E,A,E A,E,A,E
+i2 0 0.5 6.09
+i2 + 0.5 7.04 
+i2 + 0.5 7.09
+i2 + 0.5 7.04
+i2 + 0.5 6.09
+i2 + 0.5 7.04 
+i2 + 0.5 7.09
+i2 + 0.5 7.04
+
+;E,B,E,B
+i2 0 0.5 7.04
+i2 + 0.5 7.11 
+i2 + 0.5 8.04
+i2 + 0.5 7.11
+i2 + 0.5 7.04
+i2 + 0.5 7.11 
+i2 + 0.5 8.04
+i2 + 0.5 7.11
+
+;B,Fs,B,Fs
+i2 0 0.5 6.11
+i2 + 0.5 7.06
+i2 + 0.5 7.11
+i2 + 0.5 7.06
+i2 + 0.5 6.11
+i2 + 0.5 7.06
+i2 + 0.5 7.11
+i2 + 0.5 7.06
+
+
+
+
+
+</CsScore>
+</CsoundSynthesizer>
